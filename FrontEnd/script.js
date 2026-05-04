@@ -4,6 +4,8 @@ const gallery = document.querySelector(".gallery"); // Appel de la div "gallery"
 
 let contentData=[];
 
+let objectsArray = [] , apartmentsArray = [] , hotelsArray = [];
+
 const fetchData = async() => {
     await fetch('http://localhost:5678/api/works')
             .then((res)=> res.json())
@@ -35,3 +37,35 @@ async function contentDisplay() {
 };
 
 contentDisplay();
+
+// Partie Filtres
+
+const filterData = async() => {
+
+    await fetchData();
+
+    for ( let i = 0; i < contentData.length - 1; i++){
+        
+        switch (contentData[i].category.id){
+
+            case 1 :
+                objectsArray.push(contentData[i]);
+                break;
+            case 2 :
+                apartmentsArray.push(contentData[i]);
+                break;
+            case 3 :
+                hotelsArray.push(contentData[i]);
+            default :
+                null;
+        }
+    }
+
+    console.log(objectsArray, apartmentsArray, hotelsArray);
+    
+
+}
+
+filterData();
+
+// console.log(contentData[0].category.id);

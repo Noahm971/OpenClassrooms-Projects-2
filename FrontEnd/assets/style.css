@@ -52,6 +52,7 @@ body {
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	background-color: #FFFEF8;
 }
 header {
 	display: flex;
@@ -84,6 +85,40 @@ h2{
 	font-size: 30px;
 	color: #1D6154
 }
+
+.filter-container{
+	width: 100%;
+	margin: 25px auto;
+	display: flex;
+	justify-content: center;
+}
+
+.filter-button{
+	cursor: pointer;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 10px;
+	padding: 5px 20px;
+	width: auto;
+	height: 40px;
+	border: #1D6154 solid 1px;
+	color: #1D6154;
+	font-weight: bolder;
+	background: none;
+	border-radius: 25px;
+}
+
+input[type="radio"]{
+	display: none;
+}
+
+input[type="radio"]:checked + .filter-button{
+	transition: 0.5s;
+	background: #1D6154;
+	color: white;
+}
+
 nav ul {
 	display: flex;
 	align-items: center;
