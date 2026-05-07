@@ -36,21 +36,21 @@
 	</section>
 	<section id="portfolio">
 		<h2>Mes Projets</h2>
-		<div class="filter-container">
+		<form action="GET" class="filter-container">
 
-			<input type="radio" name="filter" id="all" hidden checked>
+			<input type="radio" name="filter" id="all" hidden checked value="0">
 			<label for="all" class="filter-button">Tous</label>
 
-			<input type="radio" name="filter" id="objects" hidden>
+			<input type="radio" name="filter" id="objects" hidden value="1">
 			<label for="objects" class="filter-button">Objets</label>
 
-			<input type="radio" name="filter" id="apartments" hidden>
+			<input type="radio" name="filter" id="apartments" hidden value="2">
 			<label for="apartments" class="filter-button">Appartements</label>
 
-			<input type="radio" name="filter" id="hotels" hidden>
+			<input type="radio" name="filter" id="hotels" hidden value="3">
 			<label for="hotels" class="filter-button">Hôtels & restaurants</label>
 
-		</div>
+		</form>
 		<div class="gallery"></div>
 	</section>
 	<section id="contact">

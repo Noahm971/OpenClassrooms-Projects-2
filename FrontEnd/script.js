@@ -1,71 +1,85 @@
 const gallery = document.querySelector(".gallery"); // Appel de la div "gallery" afin de la pointer facilement par la suite
 
-// Fonction de Récupération de données
+
+// Appel de tous les inputs nécessaires au filtre
+const filterAll = document.getElementById("all");
+const filterObject = document.getElementById("objects");
+const filterApartment = document.getElementById("apartments");
+const filterHotel = document.getElementById("hotels");
+
+
+console.log(filterAll);
 
 let contentData=[];
 
-let objectsArray = [] , apartmentsArray = [] , hotelsArray = [];
+// Fonction de Récupération de données
 
-const fetchData = async() => {
-    await fetch('http://localhost:5678/api/works')
-            .then((res)=> res.json())
-            .then((data)=> contentData = data);
-    console.log(contentData);
-    
-};
+async function fetchData() {
 
+    const response = await fetch('http://localhost:5678/api/works');
 
-// Fonction d'affichage de données
+    contentData = await response.json();
 
-async function contentDisplay() {
+    displayData(contentData);
+}
 
-    await fetchData();
+// Fonction d'affichage de données 
 
-    gallery.innerHTML = contentData.map((project) => ( 
-        
+function displayData(array)  {
+
+    gallery.innerHTML = array.map(project => 
+
         `
         <figure>
-
             <img src="${project.imageUrl}" alt="${project.title}">
             <figcaption>${project.title}</figcaption>
-
         </figure>
         `
 
-    )).join("");
-    
+    ).join("");
+
 };
 
-contentDisplay();
+// Les différants filtres
 
-// Partie Filtres
+let filteredArray = [];
 
-const filterData = async() => {
 
-    await fetchData();
+// Le filtre "Tout"
+filterAll.addEventListener("change", ()=>{
 
-    for ( let i = 0; i < contentData.length - 1; i++){
-        
-        switch (contentData[i].category.id){
+    displayData(contentData);
 
-            case 1 :
-                objectsArray.push(contentData[i]);
-                break;
-            case 2 :
-                apartmentsArray.push(contentData[i]);
-                break;
-            case 3 :
-                hotelsArray.push(contentData[i]);
-            default :
-                null;
-        }
-    }
+});
 
-    console.log(objectsArray, apartmentsArray, hotelsArray);
-    
 
-}
+// Le filtre "Objet"
+filterObject.addEventListener("change", ()=>{
 
-filterData();
+    filteredArray = contentData.filter((element) => element.category.id === 1);
 
-// console.log(contentData[0].category.id);
+    displayData(filteredArray);
+
+});
+
+
+// Le filtre "Appartements"
+filterApartment.addEventListener("change", ()=>{
+
+    filteredArray = contentData.filter((element) => element.category.id === 2);
+
+    displayData(filteredArray);
+
+});
+
+
+// Le filtres "Hôtels & Restaurants"
+filterHotel.addEventListener("change", ()=>{
+
+    filteredArray = contentData.filter((element) => element.category.id === 3);
+
+    displayData(filteredArray);
+
+});
+
+fetchData();
