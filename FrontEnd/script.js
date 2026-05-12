@@ -83,3 +83,17 @@ filterHotel.addEventListener("change", ()=>{
 });
 
 fetchData();
+
+// Redirection vers la page Login
+
+function RedirectToLogin() {
+    document.location.href ="./Login/Login.html";
+}
+
+const login = document.querySelector(".login-text");
+
+login.addEventListener("click", ()=>{
+
+    RedirectToLogin();
+    
+})
