@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,7 @@
 	    <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	    <nav>
 		    <ul>
-			    <li>projets</li>
+			    <li class="project-text">projets</li>
 			    <li>contact</li>
 			    <li class="login-text">login</li>
 			    <li><img src="./icons/instagram.png" alt="Instagram"></li>
@@ -29,14 +29,14 @@
 
         <h1 class="login-title">Log In</h1>
 
-        <form action="GET">
+        <form class="loginForm">
 
-            <label for="email">E-mail</label>
-            <input type="text" id="email" name="email">
+            <label for="emailLogin">E-mail</label>
+            <input type="text" id="emailLogin" name="emailLogin">
 
             <label for="password">Mot de passe</label>
             <input type="password" id ="password" name="password">
-            
+
             <button type="submit" class="connect-button">
                 <span>Se connecter</span>
             </button>
@@ -58,6 +58,6 @@
     </footer>
 
 
-    <script src="../script.js"></script>
+    <script src="./loginScript.js"></script>
 </body>
 </html>
