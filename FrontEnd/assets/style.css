@@ -221,3 +221,36 @@ footer nav ul {
 	margin: 2em
 }
 
+.project-mod{
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+}
+
+#modify{
+	display: none;
+	margin-bottom: 25px;
+	background-color: inherit;
+	border: none;
+	transition: 0.5s;
+}
+
+#modify:hover{
+	color: #1D6154;
+}
+
+#icon-modify{
+	height: 20px;
+	width: 20px;
+}
+
+.edition{
+	display: none;
+	justify-content: center;
+	align-items: center;
+	height: 50px;
+	width: 100vw;
+	margin-left: calc(50% - 50vw);
+	background-color: black;
+	color: white;
+}

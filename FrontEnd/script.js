@@ -1,18 +1,22 @@
 const gallery = document.querySelector(".gallery"); // Appel de la div "gallery" afin de la pointer facilement par la suite
 
+// Appel des éléments utiles pour l'après-connexion
 
-// Appel de tous les inputs nécessaires au filtre
-const filterAll = document.getElementById("all");
-const filterObject = document.getElementById("objects");
-const filterApartment = document.getElementById("apartments");
-const filterHotel = document.getElementById("hotels");
+const loginText = document.querySelector(".login-text");
+const modifyBtn = document.getElementById('modify');
+const filterContainer = document.querySelector(".filter-container");
+const editionMode = document.querySelector(".edition");
 
+// Appel de tous les inputs nécessaires au filtre :
 
-console.log(filterAll);
+const filterAll = document.getElementById('all');
+const filterObject = document.getElementById('objects');
+const filterApartment = document.getElementById('apartments');
+const filterHotel = document.getElementById('hotels');
 
 let contentData=[];
 
-// Fonction de Récupération de données
+// Fonction de Récupération de données :
 
 async function fetchData() {
 
@@ -21,9 +25,9 @@ async function fetchData() {
     contentData = await response.json();
 
     displayData(contentData);
-}
+};
 
-// Fonction d'affichage de données 
+// Fonction d'affichage de données :
 
 function displayData(array)  {
 
@@ -40,7 +44,7 @@ function displayData(array)  {
 
 };
 
-// Les différants filtres
+// Les différants filtres :
 
 let filteredArray = [];
 
@@ -73,7 +77,7 @@ filterApartment.addEventListener("change", ()=>{
 });
 
 
-// Le filtres "Hôtels & Restaurants"
+// Le filtre "Hôtels & Restaurants"
 filterHotel.addEventListener("change", ()=>{
 
     filteredArray = contentData.filter((element) => element.category.id === 3);
@@ -88,12 +92,44 @@ fetchData();
 
 function RedirectToLogin() {
     document.location.href ="./Login/Login.html";
-}
+};
 
 const login = document.querySelector(".login-text");
 
 login.addEventListener("click", ()=>{
 
     RedirectToLogin();
+
+});
+
+// Fonction permettant de tracker la connexion de l'utilisateur et de changer le contenu de la page principale après une connexion réussie
+
+function loginCheck() {
+
+    if (sessionStorage.tokenKey){ // Cette condition vérifie si le "tokenKey" existe dans le sessionStorage
+
+        loginText.textContent = "logout"; // Je change le texte "login" en "logout"
+
+        modifyBtn.style.display = "block"; // Je fais apparaître le bouton "Modifier"
+
+        filterContainer.style.display = "none"; // Je fais disparaître les filtres
+
+        editionMode.style.display = "flex"; // Je fais apparaître la bande "édition"
+
+        loginText.onclick = () =>{ // Je mets un petit évenement sur le clic du "logout" qui va vider le tokenKey et recharger la page
+
+            sessionStorage.tokenKey = "";
+
+            document.location.reload();
+
+        }
+
+    } else {
+        loginText.textContent = "login"; // Si la "tokenKey" n'est pas identifié ou bien vide alors le texte reste "login"
+    };
+
     
-})
+};
+
+loginCheck();
+
