@@ -229,9 +229,11 @@ footer nav ul {
 
 #modify{
 	display: none;
-	margin-bottom: 25px;
-	background-color: inherit;
-	border: none;
+	justify-content: center;
+	align-items: center;
+	text-decoration: none;
+	margin-bottom: 30px;
+	color: black;
 	transition: 0.5s;
 }
 
@@ -253,4 +255,169 @@ footer nav ul {
 	margin-left: calc(50% - 50vw);
 	background-color: black;
 	color: white;
+}
+
+.modal{
+	position:fixed;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	top: 0;
+	padding: 30px;
+	width: 100%;
+	height: 100%;
+	transform: scale(0);
+	transition: 0.5s;
+	z-index: 0;
+}
+
+@keyframes modal{
+	
+	100%{
+		transform: scale(1);
+	}
+}
+
+@keyframes modal1{
+	100%{
+		transform: scale(0);
+	}
+}
+
+.modal-wrapper{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: white;
+	border-radius: 15px;
+	position:fixed;
+	padding: 60px;
+	top: 400px;
+	left: 50%;
+	transform: translateX(-350px) scale(0);
+	width: 550px;
+	height: 680px;
+	transition: 0.5s;
+	z-index: 1;
+}
+
+.grid-container{
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 10px;
+}
+
+.grid-element{
+	position: relative;
+}
+
+.grid-element img{
+	object-fit: cover;
+	height: 100%;
+	width: 100%;
+}
+
+.delete-btn{
+	position: absolute;
+  	top: 6px;
+  	right: 6px;
+  	width: 15px;
+  	height: 15px;
+  	border: none;
+  	border-radius: 3px;
+  	background: black;
+  	color: white;
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	cursor: pointer;
+  	padding: 0;
+}
+
+.delete-btn i {
+  font-size: 8px;
+}
+	
+.close-window{
+	position: absolute;
+	border: none;
+	background-color: inherit;
+	height: 25px;
+	width: 25px;
+	top: 15px;
+	right: 15px;
+	cursor: pointer;
+}
+
+.cross1{
+	display: block;
+	height: 3px;
+	width: 15px;
+	border-radius: 5px;
+	background-color: black;
+	transform: translateY(1px) rotateZ(45deg) !important;
+}
+
+.cross2{
+	display: block;
+	height: 3px;
+	width: 15px;
+	border-radius: 5px;
+	background-color: black;
+	transform: translateY(-2px) rotate(-45deg) !important;
+}
+
+.add-photo{
+	position: absolute;
+	top: 700px;
+	width: 230px;
+	height: 35px;
+	border: none;
+	border-radius: 25px;
+	background-color: #1D6154;
+	color: white;
+	font-size: 1.2rem;
+	transition: 0.5s;
+	cursor: pointer;
+}
+
+.add-photo:hover{
+	background-color: #267465;
+}
+
+.grid-container::after{
+	content: "";
+	position: absolute;
+	top: 650px;
+	left: 50%;
+	transform: translateX(-200px);
+	background-color: rgba(192, 192, 192, 0.8);
+	height: 1px;
+	width: 400px;
+}
+
+@media screen and (max-width: 875px) {
+	.modal-wrapper{
+		width: 450px;
+		height: 580px;
+		padding: 30px;
+		left: 500px;
+	}
+	.grid-element{
+		width: 100px;
+		height: 130px;
+	}
+	.grid-container {
+		grid-template-columns: repeat(3, 1fr);
+		overflow-y: auto;
+	}
+	.grid-container::after{
+		top: 550px;
+	}
+	.add-photo{
+		top: 575px;
+	}
+	::-webkit-scrollbar{
+        display: none;
+    }
 }

@@ -14,6 +14,10 @@ const filterObject = document.getElementById('objects');
 const filterApartment = document.getElementById('apartments');
 const filterHotel = document.getElementById('hotels');
 
+const modal = document.querySelector(".modal");
+const modalWrapper = document.querySelector(".modal-wrapper");
+const closeWindow = document.querySelector(".close-window");
+
 let contentData=[];
 
 // Fonction de Récupération de données :
@@ -110,7 +114,7 @@ function loginCheck() {
 
         loginText.textContent = "logout"; // Je change le texte "login" en "logout"
 
-        modifyBtn.style.display = "block"; // Je fais apparaître le bouton "Modifier"
+        modifyBtn.style.display = "flex"; // Je fais apparaître le bouton "Modifier"
 
         filterContainer.style.display = "none"; // Je fais disparaître les filtres
 
@@ -133,3 +137,48 @@ function loginCheck() {
 
 loginCheck();
 
+// Ajout d'un évenement au bouton "modifier" pour afficher la modale à l'aide de plusieurs paramètres de style
+
+modifyBtn.addEventListener('click', (e)=>{
+
+    e.preventDefault(); // Comme le "bouton" est une ancre, la page se recharge à son click, cette ligne empêche cela
+
+    modal.style.animation = "modal 0.5s ease-in-out forwards"; // Ajout d'une animation
+
+    modalWrapper.style.scale = "1";
+
+    modal.setAttribute("aria-modal", "true");
+
+    modalWrapper.style.transform = "translateX(-350px)"
+
+    setTimeout(()=>{ // Assombrissement du background après l'ouverture de la modale
+        modal.style.background = "rgba(0, 0, 0, 0.25)"
+    }, 500);
+
+    console.log("test");
+    
+});
+
+function closeModal() { // Fonction qui va faire l'inverse de l'évenement précédent, et donc fermer la modale
+
+    modal.setAttribute("aria-modal", "false");
+    modal.style.background = "none";
+    modalWrapper.style.transform = "translateX(-350px) scale(0)";
+    modal.style.animation = "modal1 0.5s ease-in-out forwards";
+
+};
+
+
+closeWindow.addEventListener("click", ()=>{ // Évenement au bouton "croix" pour fermer la modale
+
+    closeModal();
+
+});
+
+modal.addEventListener("click", (e)=>{ // Évenement au background de la modale pour fermer la fenêtre également
+
+    if (!modalWrapper.contains(e.target)) { // Ce paramêtre signifie que si la position du clic est en dehors de modalWrapper, la fonction closeModal() s'exécute
+        closeModal();
+    }
+
+});
