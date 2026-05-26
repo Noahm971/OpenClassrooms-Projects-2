@@ -7,7 +7,7 @@ const modifyBtn = document.getElementById('modify');
 const filterContainer = document.querySelector(".filter-container");
 const editionMode = document.querySelector(".edition");
 
-// Appel de tous les inputs nécessaires au filtre :
+// Appel de touts les inputs nécessaires aux filtres :
 
 const filterAll = document.getElementById('all');
 const filterObject = document.getElementById('objects');
@@ -17,12 +17,15 @@ const filterHotel = document.getElementById('hotels');
 const modal = document.querySelector(".modal");
 const modalWrapper = document.querySelector(".modal-wrapper");
 const closeWindow = document.querySelector(".close-window");
+const gridContainer = document.querySelector(".grid-container");
+
+
 
 let contentData=[];
 
-// Fonction de Récupération de données :
+// Fonction de Récupération de données : ---------------------------------------
 
-async function fetchData() {
+async function fetchData() { // Récupération pour la page principale
 
     const response = await fetch('http://localhost:5678/api/works');
 
@@ -31,9 +34,25 @@ async function fetchData() {
     displayData(contentData);
 };
 
-// Fonction d'affichage de données :
+let modalData = [];
 
-function displayData(array)  {
+async function dataModal() { // Récupération pour la fenêtre modale, même fonctionnement que la fonction précedente
+
+    const response = await fetch('http://localhost:5678/api/works');
+
+    modalData = await response.json();
+
+    displayModal(modalData);
+
+    console.log(modalData);
+
+};
+
+dataModal();
+
+// Fonction d'affichage de données : ---------------------------------------------------
+
+function displayData(array)  { // Affichage pour la page principale
 
     gallery.innerHTML = array.map(project => 
 
@@ -48,7 +67,24 @@ function displayData(array)  {
 
 };
 
-// Les différants filtres :
+function displayModal(array) { // Affichage pour la modale, même fonctionnement que la fonction précedente mais le contenu du map est différant
+
+    gridContainer.innerHTML = array.map(element => 
+        `
+        
+        <span class="grid-element">
+			<img src="${element.imageUrl}" alt="${element.title}">
+			<button class="delete-btn" id="${element.id}"><i id="${element.id}" class="fa fa-trash" aria-hidden="true"></i></button> 
+		</span>
+        
+        `
+    ).join(""); // Ici j'assigne l'id de chaque travaux aux boutons correspondants, je mets l'id également sur l'îcone car si l'utilisateur clique dessus, la suppression s'effectura également
+
+    fetchBtn(); // Une fois le map effectué, j'appelle mes boutons
+    
+};
+
+// Les différants filtres : -----------------------------------------------------------
 
 let filteredArray = [];
 
@@ -92,7 +128,7 @@ filterHotel.addEventListener("change", ()=>{
 
 fetchData();
 
-// Redirection vers la page Login
+// Redirection vers la page Login--------------------------------------------------------
 
 function RedirectToLogin() {
     document.location.href ="./Login/Login.html";
@@ -106,7 +142,7 @@ login.addEventListener("click", ()=>{
 
 });
 
-// Fonction permettant de tracker la connexion de l'utilisateur et de changer le contenu de la page principale après une connexion réussie
+// Fonction permettant de tracker la connexion de l'utilisateur et de changer le contenu de la page principale après une connexion réussie-----------------------------------------------------
 
 function loginCheck() {
 
@@ -137,7 +173,7 @@ function loginCheck() {
 
 loginCheck();
 
-// Ajout d'un évenement au bouton "modifier" pour afficher la modale à l'aide de plusieurs paramètres de style
+// Ajout d'un évenement au bouton "modifier" pour afficher la modale à l'aide de plusieurs paramètres de style-------------------------------------------------------
 
 modifyBtn.addEventListener('click', (e)=>{
 
@@ -182,3 +218,41 @@ modal.addEventListener("click", (e)=>{ // Évenement au background de la modale 
     }
 
 });
+
+// Suppression de travaux -------------------------------------------------------------------
+
+const deleteItem = { // Objet de configuration contenant une méthode "DELETE" et des headers contenants le token d'identification
+        method : "DELETE", // La méthode pour supprimer des éléments de la base de données est "DELETE"
+        headers : {"Content-Type": "application/json", "Authorization": `Bearer ${sessionStorage.tokenKey}`} // Le token permet de donner accès à la suppression de données
+    };
+
+async function deleteWorks(id) { // Fonction qui va faire une requête à l'API pour supprimer les travaux avec l'objet de configuration précedent1
+
+    const response = await fetch(`http://localhost:5678/api/works/${id}`, deleteItem);
+
+};
+
+// --------------------------------------------------------------------
+
+function fetchBtn() { // Fonction pour appeler les boutons de suppression (je ne peux faire de "const" classique car ces boutons n'existent qu'une fois le map de la modale terminé)
+
+    const deleteBtn = document.querySelectorAll(".delete-btn"); // Appel de mes boutons
+
+    deleteBtn.forEach((btn) => { // Ici un évenements est créer à chaque bouton appelé précedemment
+
+        btn.addEventListener("click", async (e) => { // Évenement qui va :
+
+            e.preventDefault();
+
+            await deleteWorks(e.target.id); // 1) Envoyer la requête de suppression à l'API et qui va prendre en paramètre l'id du bouton/îcone cliqué 
+            
+            await dataModal();
+                                // 2) Recharger le contenu de la page avec les nouvelles données
+            await fetchData();
+
+        });
+
+    });
+
+};
+// --------------------------------------------------------------------
