@@ -185,7 +185,7 @@ modifyBtn.addEventListener('click', (e)=>{
 
     modal.setAttribute("aria-modal", "true");
 
-    modalWrapper.style.transform = "translateX(-350px)"
+    modalWrapper.style.transform = "translateX(-350px)";
 
     setTimeout(()=>{ // Assombrissement du background après l'ouverture de la modale
         modal.style.background = "rgba(0, 0, 0, 0.25)"
@@ -255,4 +255,125 @@ function fetchBtn() { // Fonction pour appeler les boutons de suppression (je ne
     });
 
 };
-// --------------------------------------------------------------------
+
+// Ajout de travaux -----------------------------------------------------
+
+// Affichage du formulaire
+
+const addPhoto = document.querySelector(".add-photo");
+const titleModal = document.getElementById("modal-title");
+const backArrow = document.querySelector(".back-arrow");
+const newProject = document.querySelector(".new-project");
+const formSubmit = document.getElementById("form-submit");
+
+addPhoto.addEventListener("click", () => { // Évenement permettant de changer le contenu qui va afficher le formulaire dans la modale
+
+    newProject.style.display = "flex";
+
+    gridContainer.style.display = "none";
+
+    titleModal.textContent = "Ajout photo";
+
+    formSubmit.style.display = "block";
+
+    addPhoto.style.display = "none";
+
+    backArrow.style.display = "block";
+
+});
+
+backArrow.addEventListener("click", () => { // Évenement permettant de remettre le contenu de base dans la modale
+
+    newProject.style.display = "none";
+
+    gridContainer.style.display = "grid";
+
+    titleModal.textContent = "Galerie photo";
+
+    backArrow.style.display = "none";
+
+    formSubmit.style.display = "none";
+
+    addPhoto.style.display = "block";
+
+    // Si l'utilisateur utilise la "backArrow" après avoir choisi un fichier alors les lignes suivantes vont retirer la balise img et faire réapparaître le bouton
+
+    imgBackground.style.zIndex = "0";
+    imgBackground.innerHTML = "";
+    inputBtn.style.display = "flex";
+
+});
+
+// Effet après sélection du fichier 
+
+const inputBtn = document.getElementById('input-btn');
+
+const imgBackground = document.querySelector(".img-background");
+
+const projectPhoto = document.getElementById('project-photo');
+
+const titleProject = document.getElementById('title-project');
+
+const categoryProject = document.getElementById('category-project');
+
+
+let imgPreview; // Variable qui va contenir l'url que l'on va utiliser comme réference pour afficher le fichier choisi par l'utilisateur
+
+let fileInput; // Variable qui va contenir le fichier choisi par l'utilisateur
+
+
+projectPhoto.addEventListener("change", (e) => {
+
+    const file = e.target.files[0]; // "e.target.files[0]" permet de pointer le fichier de l'input "file"
+
+    fileInput = file; 
+
+    imgPreview = URL.createObjectURL(file); // Création d'une url temporaire lié au fichier
+
+    imgBackground.innerHTML = `<img class="preview-img" src="${imgPreview}"></img>`; // Affichage du fichier en "preview"
+    
+    imgBackground.style.zIndex = "2"; // L'image passe "devant" les éléments de l'input
+
+    inputBtn.style.display = "none"; // Le bouton disparaît
+    
+});
+
+
+
+// Envoi du formulaire
+
+
+
+newProject.addEventListener("submit", async (e) => { // Évenement à l'envoi du formulaire
+    
+    e.preventDefault();
+
+    const formData = new FormData(); // Création d'un nouvel objet formData (qui va contenir les valeurs du formulaire et les noms/valeurs correspondantes)
+
+    formData.append("image", fileInput); // La fonction "append" permet d'ajouter des objets/paramètres à mon formData (ici le string "image" et le fichier de l'image sont ajoutés)
+    formData.append("title", titleProject.value);
+    formData.append("category", categoryProject.value);
+
+    const createItem = { // Pour envoyer les données de mon formulaire, je suis obligé d'utilisé un formData et non un body en json
+
+        method : "POST",
+        headers : {"Authorization": `Bearer ${sessionStorage.tokenKey}`}, // Pas la peine de mettre "Content: multipart/form-data" donc il n'y que l'autorisation dans les headers
+        body : formData 
+
+    };
+
+    await fetch("http://localhost:5678/api/works", createItem); // Envoi vers l'API avec createItem comme objet de configuration
+
+    // Je relance les fonctions de récupération et d'affichage car le contenu de l'API a changé
+    await dataModal();
+    await fetchData();
+    
+    // Reset du formulaire d'envoi
+    newProject.reset();
+    imgBackground.style.zIndex = "0";
+    imgBackground.innerHTML = "";
+    inputBtn.style.display = "flex";
+
+});
+
+

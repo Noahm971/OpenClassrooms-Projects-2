@@ -76,9 +76,19 @@ input{
     height: 50px;
     width: 450px;
     box-shadow: 4px 3px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 50px;
     margin-top: 10px;
     font-size: 1.25rem;
+}
+
+p{
+    color: red;
+    transition: 0.5s;
+    margin-bottom: 35px;
+    opacity: 0;
+}
+
+.wrong-email, .wrong-password{
+    user-select: none;
 }
 
 label{
@@ -105,6 +115,9 @@ button:hover{
 
 .forgotten-password{
     text-decoration: underline;
+    color: #3D3D3D;
+    margin: 15px;
+    opacity: 1;
 }
 
 .forgotten-password:hover{

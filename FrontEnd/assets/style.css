@@ -344,8 +344,8 @@ footer nav ul {
 	background-color: inherit;
 	height: 25px;
 	width: 25px;
-	top: 15px;
-	right: 15px;
+	top: 30px;
+	right: 30px;
 	cursor: pointer;
 }
 
@@ -371,7 +371,7 @@ footer nav ul {
 	position: absolute;
 	top: 700px;
 	width: 230px;
-	height: 35px;
+	height: 45px;
 	border: none;
 	border-radius: 25px;
 	background-color: #1D6154;
@@ -420,4 +420,136 @@ footer nav ul {
 	::-webkit-scrollbar{
         display: none;
     }
+}
+
+.new-project{
+	display: none;
+	height: 80%;
+	width: 100%;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.new-project::after{
+	content: "";
+	position: absolute;
+	top: 675px;
+	left: 50%;
+	transform: translateX(-200px);
+	background-color: rgba(160, 160, 160, 0.8);
+	height: 1px;
+	width: 400px;
+}
+
+.file-container{
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+	background-color: #E8F1F6;
+	width: 450px;
+	height: 200px;
+	z-index: 1;
+}
+
+.img-background{
+	position: absolute;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	z-index: 0;
+	height: 200px;
+	width: 180px;
+}
+
+.preview-img{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.file-container i{
+	z-index: 1;
+	font-size: 5rem;
+	opacity: 0.2;
+}
+
+#input-btn{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 200px;
+	height: 40px;
+	background-color: #CBD6DC;
+	border-radius: 50px;
+	font-weight: bold;
+	color: rgb(42, 95, 139);
+	letter-spacing: 1px;
+	transition: 0.5s;
+	z-index: 1;
+}
+
+.file-container label:hover{
+	background-color: #bcc7cc;
+}
+
+.file-container p{
+	font-size: 0.75rem;
+	z-index: 1;
+}
+
+input[type="file"] {
+	display: none;
+}
+
+.input-container{
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+#title-project, #category-project{
+    border: none;
+    height: 50px;
+    width: 450px;
+    box-shadow: 4px 3px 10px rgba(0, 0, 0, 0.1);
+    font-size: 1.25rem;	
+}
+
+#category-project{
+	appearance: none;
+}
+
+.input-container i{
+	position: absolute;
+	font-size: 1.2rem;
+	right: 130px;
+	bottom: 180px;
+}
+
+label[for="title-project"], label[for="category-project"]{
+	font-size: 1.1rem;
+	margin: 10px 5px;
+}
+#form-submit{
+	display: none;
+}
+
+.back-arrow{
+	display: none;
+	position: absolute;
+	border: none;
+	background-color: inherit;
+	height: 25px;
+	width: 25px;
+	top: 30px;
+	left: 30px;
+	cursor: pointer;
+}
+
+.back-arrow i{
+	font-size: 1.3rem;
 }

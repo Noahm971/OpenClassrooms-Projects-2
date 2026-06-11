@@ -16,6 +16,13 @@ const password = document.getElementById('password'); //Appel de l'input "passwo
 
 const form = document.querySelector('.loginForm'); // Appel du formulaire
 
+const wrongEmail = document.querySelector('.wrong-email');
+
+const wrongPassword = document.querySelector('.wrong-password');
+
+console.log(wrongEmail, wrongPassword);
+
+
 // Évenement au submit du formulaire :
 
 form.addEventListener("submit", async (e)=> {
@@ -45,12 +52,12 @@ form.addEventListener("submit", async (e)=> {
         const response = await fetch("http://localhost:5678/api/users/login", object); // 1) J'appelle mon fetch (avec l'objet de configuration) en await pour m'assurer d'avoir la réponse avant que la suite du script s'éxecute
 
         if (response.status === 401){ // 2) Si le statut de la réponse est une erreur 401, cela signifie que Utilisateur n'est pas autorisé, le mdp est donc incorrect
-            alert("Mot de passe incorrect !");
+            wrongPassword.style.opacity = "1";
             return;
         }
 
         if (response.status === 404){ // 3) Si le statut de la réponse est une erreur 404, alors l'utilisateur n'a pas été trouvé dans la base de données 
-            alert("L'utilisateur n'a pas été trouvé !");
+            wrongEmail.style.opacity = "1";
             return;
         }
 

@@ -55,10 +55,51 @@
 						<span class="cross2"></span>
 					</button>
 
+					<button class="back-arrow">
+						<i class="fa fa-arrow-left" aria-hidden="true"></i>
+					</button>
+
 					<div class="grid-container"></div>
 
 					<button class="add-photo">Ajouter une photo</button>
 					
+					<form class="new-project">
+
+						<div class="file-container">
+							<div class="img-background"></div>
+							<i class='far fa-image'></i>
+							<label for="project-photo" id="input-btn">+ Ajouter photo</label>
+							<input type="file" id="project-photo" accept="image/*">
+							<p>jpg, png : 4Mo MAX</p>
+							<button type="submit" class="add-photo" id="form-submit">
+								Valider
+							</button>
+						</div>
+						
+						<div class="input-container">
+
+							<label for="title-project">Titre</label>
+							<input type="text" id="title-project">
+
+						</div>
+						
+						<div class="input-container">
+
+							<label for="category-project">Catégorie</label>
+							<select id="category-project">
+
+								<option value="1">Objets</option>
+								<option value="2">Appartements</option>
+								<option value="3">Hôtels & restaurants</option>
+
+							</select>
+							<i class='fas fa-angle-down'></i>
+
+						</div>
+						
+
+					</form>
+
 				</div>
 
 			</aside>
