@@ -74,7 +74,7 @@ form.addEventListener("submit", async (e)=> {
     } catch (error){ // Le catch permet d'afficher un message d'erreur si le fetch ne parvient pas à accéder à la base de données
 
         alert("Problème de réseau !");
-        console.log("Error : ", error);
+        console.log("Erreur : ", error);
         
     }
     

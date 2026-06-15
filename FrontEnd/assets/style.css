@@ -553,3 +553,15 @@ label[for="title-project"], label[for="category-project"]{
 .back-arrow i{
 	font-size: 1.3rem;
 }
+
+.mod-status{
+	position: absolute;
+	width: 180px;
+	height: 50px;
+	background-color: rgb(44, 44, 44);
+	top: 90px;
+	right: 60px;
+	color: white;
+	opacity: 0;
+	transition: 0.5s;
+}

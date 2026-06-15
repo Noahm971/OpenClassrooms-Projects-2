@@ -43,6 +43,9 @@
 		<div class="project-mod">
 
 			<h2>Mes Projets</h2>
+
+			<div class="mod-status"></div>
+
 			<a href="modal1" id="modify"><i id="icon-modify" class="fa-regular fa-pen-to-square" aria-hidden="true"></i> Modifier</a>
 			<aside id="modal1" class="modal" aria-hidden="false" role="dialog" aria-modal="false" aria-labelledby="modal-title">
 
@@ -61,9 +64,9 @@
 
 					<div class="grid-container"></div>
 
-					<button class="add-photo">Ajouter une photo</button>
+					<button type="button" class="add-photo">Ajouter une photo</button>
 					
-					<form class="new-project">
+					<form action="POST" class="new-project">
 
 						<div class="file-container">
 							<div class="img-background"></div>

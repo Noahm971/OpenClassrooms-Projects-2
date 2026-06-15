@@ -19,8 +19,6 @@ const modalWrapper = document.querySelector(".modal-wrapper");
 const closeWindow = document.querySelector(".close-window");
 const gridContainer = document.querySelector(".grid-container");
 
-
-
 let contentData=[];
 
 // Fonction de Récupération de données : ---------------------------------------
@@ -74,7 +72,7 @@ function displayModal(array) { // Affichage pour la modale, même fonctionnement
         
         <span class="grid-element">
 			<img src="${element.imageUrl}" alt="${element.title}">
-			<button class="delete-btn" id="${element.id}"><i id="${element.id}" class="fa fa-trash" aria-hidden="true"></i></button> 
+			<button type="button" class="delete-btn" id="${element.id}"><i class="fa fa-trash" aria-hidden="true"></i></button> 
 		</span>
         
         `
@@ -190,8 +188,6 @@ modifyBtn.addEventListener('click', (e)=>{
     setTimeout(()=>{ // Assombrissement du background après l'ouverture de la modale
         modal.style.background = "rgba(0, 0, 0, 0.25)"
     }, 500);
-
-    console.log("test");
     
 });
 
@@ -226,7 +222,7 @@ const deleteItem = { // Objet de configuration contenant une méthode "DELETE" e
         headers : {"Content-Type": "application/json", "Authorization": `Bearer ${sessionStorage.tokenKey}`} // Le token permet de donner accès à la suppression de données
     };
 
-async function deleteWorks(id) { // Fonction qui va faire une requête à l'API pour supprimer les travaux avec l'objet de configuration précedent1
+async function deleteWorks(id) { // Fonction qui va faire une requête à l'API pour supprimer les travaux avec l'objet de configuration précedent
 
     const response = await fetch(`http://localhost:5678/api/works/${id}`, deleteItem);
 
@@ -240,16 +236,25 @@ function fetchBtn() { // Fonction pour appeler les boutons de suppression (je ne
 
     deleteBtn.forEach((btn) => { // Ici un évenements est créer à chaque bouton appelé précedemment
 
-        btn.addEventListener("click", async (e) => { // Évenement qui va :
+        btn.addEventListener("click", async (e) => {
+
+            console.log("testS");
+            
 
             e.preventDefault();
 
-            await deleteWorks(e.target.id); // 1) Envoyer la requête de suppression à l'API et qui va prendre en paramètre l'id du bouton/îcone cliqué 
-            
-            await dataModal();
-                                // 2) Recharger le contenu de la page avec les nouvelles données
-            await fetchData();
+            // Confirmation de la suppression
+            const confirmation = confirm("Êtes-vous sûr de vouloir supprimer ce projet ?");
 
+            if(!confirmation){
+                return;
+            };
+
+            await deleteWorks(e.currentTarget.id);
+
+            alert("Le projet a bien été supprimé !");
+
+            // await deleteWorks(e.currentTarget.id); // Envoi de la requête de suppression à l'API et qui va prendre en paramètre l'id du bouton/îcone cliqué 
         });
 
     });
@@ -362,12 +367,30 @@ newProject.addEventListener("submit", async (e) => { // Évenement à l'envoi du
 
     };
 
-    await fetch("http://localhost:5678/api/works", createItem); // Envoi vers l'API avec createItem comme objet de configuration
+    if(!titleProject.value){
+        alert("Vous devez ajoutez un titre")
+    };
 
-    // Je relance les fonctions de récupération et d'affichage car le contenu de l'API a changé
-    await dataModal();
-    await fetchData();
-    
+    try{
+
+        const response = await fetch("http://localhost:5678/api/works", createItem); // Envoi vers l'API avec createItem comme objet de configuration
+
+        if(response.status === 500){
+            alert("Vous n'avez pas rempli tous les éléments")
+        }
+        if(response.status === 401){
+            alert("Vous n'êtes pas connecté !")
+        }
+        if(response.status === 201){
+            alert("Le projet a bien été ajouté !")
+        }
+    } catch(error){
+
+        alert("Problème de réseau !");
+        console.log("Error : ", error);
+
+    };
+
     // Reset du formulaire d'envoi
     newProject.reset();
     imgBackground.style.zIndex = "0";
@@ -375,5 +398,3 @@ newProject.addEventListener("submit", async (e) => { // Évenement à l'envoi du
     inputBtn.style.display = "flex";
 
 });
-
-
