@@ -65,9 +65,10 @@ form.addEventListener("submit", async (e)=> {
 
             const data = await response.json(); // Je transforme la réponse en format json
 
-            sessionStorage.tokenKey = data.token; // Je stocke mon token d'identification dans mon stockage de Session
+            sessionStorage.setItem("tokenKey", data.token);
+            // sessionStorage.tokenKey = data.token; // Je stocke mon token d'identification dans mon stockage de Session
 
-            document.location.href = "../index.html"; // Enfin je redirige l'utilisateur vers la page principale qui va être modifié dû à la présence d'un objet dans le sessionStorage
+            document.location.href = "./index.html"; // Enfin je redirige l'utilisateur vers la page principale qui va être modifié dû à la présence d'un objet dans le sessionStorage
             
         }
 

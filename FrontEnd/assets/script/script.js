@@ -129,7 +129,7 @@ fetchData();
 // Redirection vers la page Login--------------------------------------------------------
 
 function RedirectToLogin() {
-    document.location.href ="./Login/Login.html";
+    document.location.href ="./login.html";
 };
 
 const login = document.querySelector(".login-text");
@@ -156,7 +156,7 @@ function loginCheck() {
 
         loginText.onclick = () =>{ // Je mets un petit évenement sur le clic du "logout" qui va vider le tokenKey et recharger la page
 
-            sessionStorage.tokenKey = "";
+            sessionStorage.clear();
 
             document.location.reload();
 
@@ -362,7 +362,7 @@ newProject.addEventListener("submit", async (e) => { // Évenement à l'envoi du
     const createItem = { // Pour envoyer les données de mon formulaire, je suis obligé d'utilisé un formData et non un body en json
 
         method : "POST",
-        headers : {"Authorization": `Bearer ${sessionStorage.tokenKey}`}, // Pas la peine de mettre "Content: multipart/form-data" donc il n'y que l'autorisation dans les headers
+        headers : {"Authorization": `Bearer ${sessionStorage.tokenKey}`}, // Pas la peine de mettre "Content: multipart/form-data" donc il n'y que l'autorisation dans les headers "jwt"
         body : formData 
 
     };
